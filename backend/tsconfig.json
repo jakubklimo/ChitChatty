@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    /* Složky */
+    "rootDir": "./src",
+    "outDir": "./dist",
+
+    /* Prostředí */
+    "target": "ES2020",
+    "module": "commonjs",
+    "lib": ["esnext"],
+    "types": ["node"],
+
+    /* Výstup */
+    "sourceMap": true,
+
+    /* Přísnější typování */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+
+    /* Doporučené kontroly */
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+
+    /* Ostatní */
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  },
+  "include": ["src"]
+}
