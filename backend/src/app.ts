@@ -1,11 +1,13 @@
-import express, { Application } from "express";
+import express from "express";
 import morgan from "morgan";
 import compression from "compression";
 import cors from "cors";
+import { setupSwagger } from "./config";
 
-import helloRoutes from "./routes/hello.routes";
+import { routes } from "./routes";
+import { errorHandler } from "./middleware";
 
-export const app: Application = express();
+const app = express();
 
 app.use(compression());
 app.use(express.json());
@@ -13,4 +15,10 @@ app.use(morgan("dev"));
 
 app.use(cors());
 
-app.use("/api", helloRoutes);
+routes.forEach(({ path, router }) => app.use(path, router));
+
+setupSwagger(app);
+
+app.use(errorHandler)
+
+export default app;
