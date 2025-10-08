@@ -1,5 +1,5 @@
 import jwt, { SignOptions, JwtPayload, Algorithm } from "jsonwebtoken";
-import { StringValue } from "ms";
+import ms from "ms";
 import { config } from "../config";
 
 export interface AccessTokenPayload extends JwtPayload {
@@ -20,7 +20,7 @@ export const generateAccessToken = (user: { id: number; email: string; name: str
     };
 
     const options: SignOptions = {
-        expiresIn: config.jwtExpires as StringValue,
+        expiresIn: config.jwtExpires as ms.StringValue,
         algorithm: config.jwtAlgorithm as Algorithm
     }
 
@@ -31,4 +31,15 @@ export const verifyToken = (token: string): AccessTokenPayload => {
     return jwt.verify(token, config.jwtSecret, {
         algorithms: [config.jwtAlgorithm as Algorithm]
     }) as AccessTokenPayload;
+}
+
+export const getRefreshTokenExpiry = (): Date => {
+    const expiresIn = config.jwtRefreshExpires;
+    const durationMs = ms(expiresIn as ms.StringValue);
+
+    if (typeof durationMs !== "number") {
+        throw new Error(`Invalid refresh token expiry format: ${expiresIn}`);
+    }
+
+    return new Date(Date.now() + durationMs);
 }

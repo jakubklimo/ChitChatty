@@ -13,5 +13,5 @@ export const config = {
     jwtRefreshExpires: process.env.JWT_REFRESH_EXPIRES_IN || "7d",
     jwtAlgorithm: process.env.JWT_ALGORITHM || "HS256",
 
-    bcryptRounds: process.env.BCRYPT_ROUNDS || 12,
+    bcryptRounds: Number(process.env.BCRYPT_ROUNDS) || 12,
 };

@@ -1,4 +1,5 @@
 import { AppError } from "./errors";
+import { logger } from "./logger";
 
 export const getStatusCode = (error: any): number => {
     if (error instanceof AppError) return error.statusCode;
@@ -17,6 +18,16 @@ export const toHttpError = (error: any, includeStack = false) => {
         };
     }
 
+    if (error.name === 'ZodError') {
+        return {
+            success: false,
+            error: 'Validation failed',
+            code: 'VALIDATION_ERROR',
+            details: error.errors,
+        };
+    }
+
+    logger.error({ error }, "Unhandled error in mapper");
     return {
         seccess: false,
         error: "Internal server error",
