@@ -63,9 +63,9 @@ export const refresh = async (req: Request, res: Response, next: NextFunction) =
     }
 }
 
-export const logout = async (req: Request, res: Response, next: NextFunction) => {
+export const logout = async (_req: Request, res: Response, next: NextFunction) => {
     try {
-        const user = (req as any).user;
+        const user = res.locals.user;
 
         await authService.logout(user.sid);
 
@@ -80,9 +80,9 @@ export const logout = async (req: Request, res: Response, next: NextFunction) =>
     }
 }
 
-export const logoutAll = async (req: Request, res: Response, next: NextFunction) => {
+export const logoutAll = async (_req: Request, res: Response, next: NextFunction) => {
     try {
-        const user = (req as any).user;
+        const user = res.locals.user;
 
         await authService.logoutAll(user.sub);
 
